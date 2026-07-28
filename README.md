@@ -13,8 +13,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add your GitHub repository URL here](https://github.com/rarifingerstyle-svg/Interactive-comments-section)
-- Live Site URL: [Add your Vercel / GitHub Pages URL here](https://your-project-name.vercel.app)
+- Solution URL: [GitHub repository URL here](https://github.com/rarifingerstyle-svg/Interactive-comments-section)
+- Live Site URL: [Vercel URL here](https://interactive-comments-section-xi-weld.vercel.app)
 
 ## My process
 
