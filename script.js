@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scoreBtn) {
       const card = scoreBtn.closest(".comment-card");
       const scoreValue = card.querySelector(".score-value");
-      let currentScore = parseInt(scoreValue.textContent, 10);
+      const currentScore = parseInt(scoreValue.textContent, 10);
 
       if (scoreBtn.classList.contains("btn-plus")) {
         scoreValue.textContent = currentScore + 1;
