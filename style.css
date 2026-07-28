@@ -1,0 +1,492 @@
+/* ==========================================
+   1. VARIABLES & RESET
+   ========================================== */
+:root {
+  /* Colors dari Style Guide */
+  --clr-purple-600: hsl(238, 40%, 52%);
+  --clr-pink-400: hsl(358, 79%, 66%);
+  --clr-purple-200: hsl(239, 57%, 85%);
+  --clr-pink-200: hsl(357, 100%, 86%);
+
+  --clr-grey-800: hsl(212, 24%, 26%);
+  --clr-grey-500: hsl(211, 10%, 45%);
+  --clr-grey-100: hsl(223, 19%, 93%);
+  --clr-grey-50: hsl(228, 33%, 97%);
+  --clr-white: hsl(0, 100%, 100%);
+
+  /* Typography */
+  --ff-base: 'Rubik', sans-serif;
+  --fs-body: 16px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================
+   2. BASE LAYOUT
+   ========================================== */
+body {
+  font-family: var(--ff-base);
+  font-size: var(--fs-body);
+  background-color: var(--clr-grey-50);
+  color: var(--clr-grey-500);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.comments-container {
+  width: 100%;
+  max-width: 730px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ==========================================
+   3. COMMENT CARD COMPONENT
+   ========================================== */
+.comment-card {
+  background-color: var(--clr-white);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .comment-card {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+/* Score Counter (+ / -) */
+.score-counter {
+  background-color: var(--clr-grey-50);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.625rem;
+  width: fit-content;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .score-counter {
+    flex-direction: column;
+    height: fit-content;
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+.btn-score {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.btn-score:hover img {
+  filter: brightness(0.5) sepia(1) hue-rotate(200deg) saturate(5);
+}
+
+.score-value {
+  color: var(--clr-purple-600);
+  font-weight: var(--fw-bold);
+  font-size: 0.9375rem;
+}
+
+/* Comment Header & Content */
+.comment-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+}
+
+.username {
+  color: var(--clr-grey-800);
+  font-weight: var(--fw-bold);
+}
+
+.badge-you {
+  background-color: var(--clr-purple-600);
+  color: var(--clr-white);
+  font-size: 0.75rem;
+  font-weight: var(--fw-medium);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.125rem;
+}
+
+.time-ago {
+  color: var(--clr-grey-500);
+  font-size: 0.875rem;
+}
+
+/* Tombol Aksi (Reply, Delete, Edit) */
+.btn-reply, .btn-edit, .btn-delete {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.9375rem;
+  transition: opacity 0.2s ease;
+}
+
+.btn-reply, .btn-edit {
+  color: var(--clr-purple-600);
+}
+
+.btn-delete {
+  color: var(--clr-pink-400);
+}
+
+.btn-reply:hover, .btn-edit:hover {
+  color: var(--clr-purple-200);
+}
+
+.btn-delete:hover {
+  color: var(--clr-pink-200);
+}
+
+.user-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.comment-text {
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.replying-to {
+  color: var(--clr-purple-600);
+  font-weight: var(--fw-bold);
+}
+
+/* ==========================================
+   4. THREAD BALASAN (REPLIES)
+   ========================================== */
+.replies-wrapper {
+  border-left: 2px solid var(--clr-grey-100);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .replies-wrapper {
+    margin-left: 2.5rem;
+    padding-left: 2.5rem;
+  }
+}
+
+/* ==========================================
+   5. FORM INPUT KOMENTAR
+   ========================================== */
+.add-comment-section {
+  background-color: var(--clr-white);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.comment-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "input input"
+    "avatar submit";
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .comment-form {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "avatar input submit";
+    align-items: start;
+  }
+}
+
+.comment-form .avatar {
+  grid-area: avatar;
+}
+
+.comment-input {
+  grid-area: input;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--clr-grey-100);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  resize: none;
+  outline: none;
+  color: var(--clr-grey-800);
+  transition: border-color 0.2s ease;
+}
+
+.comment-input:focus {
+  border-color: var(--clr-purple-600);
+}
+
+.btn-submit {
+  grid-area: submit;
+  justify-self: end;
+  background-color: var(--clr-purple-600);
+  color: var(--clr-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+  background-color: var(--clr-purple-200);
+}
+
+/* ==========================================
+   6. MODAL KONFIRMASI HAPUS
+   ========================================== */
+.modal-delete {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  margin: auto;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-delete::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-title {
+  color: var(--clr-grey-800);
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+}
+
+.modal-desc {
+  line-height: 1.4;
+  color: var(--clr-grey-500);
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.875rem;
+}
+
+.btn-cancel, .btn-confirm-delete {
+  padding: 0.875rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--clr-white);
+  font-family: inherit;
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-cancel {
+  background-color: var(--clr-grey-500);
+}
+
+.btn-confirm-delete {
+  background-color: var(--clr-pink-400);
+}
+
+.btn-cancel:hover, .btn-confirm-delete:hover {
+  opacity: 0.7;
+}
+
+/* ==========================================
+   7. FOOTER
+   ========================================== */
+.attribution {
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--clr-grey-500);
+}
+
+.attribution a {
+  color: var(--clr-purple-600);
+  font-weight: var(--fw-bold);
+}
+/* ==========================================
+   MODAL KONFIRMASI HAPUS (DELETE MODAL)
+   ========================================== */
+
+/* Pengaturan elemen <dialog> bawaan */
+.modal-delete {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1.5rem; /* Padding lebih kecil untuk mobile */
+  width: calc(100% - 2rem); /* Memberikan margin di kiri-kanan layar mobile */
+  max-width: 400px; /* Batas lebar maksimal untuk layar desktop */
+  margin: auto;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  background-color: var(--clr-white);
+}
+
+/* Latar belakang redup (Backdrop overlay) */
+.modal-delete::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-title {
+  color: var(--clr-grey-800);
+  font-size: 1.25rem;
+  font-weight: var(--fw-medium);
+}
+
+.modal-desc {
+  line-height: 1.5;
+  color: var(--clr-grey-500);
+  font-size: 0.9375rem;
+}
+
+/* Tombol Aksi di Modal */
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 Kolom sejajar di mobile & desktop */
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.btn-cancel,
+.btn-confirm-delete {
+  padding: 0.875rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--clr-white);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.btn-cancel {
+  background-color: var(--clr-grey-500);
+}
+
+.btn-confirm-delete {
+  background-color: var(--clr-pink-400);
+}
+
+.btn-cancel:hover,
+.btn-confirm-delete:hover {
+  opacity: 0.7;
+}
+
+/* Penyesuaian khusus Desktop Modal (Ukuran layar >= 640px) */
+@media (min-width: 640px) {
+  .modal-delete {
+    padding: 2rem; /* Padding lebih luas sesuai desktop-modal.jpg */
+  }
+
+  .modal-title {
+    font-size: 1.375rem;
+  }
+
+  .modal-actions {
+    gap: 0.875rem;
+  }
+}
+/* Styling untuk Form Edit & Tombol Update */
+.edit-box-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--clr-grey-500, #e9ecef);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--clr-grey-800, #324152);
+  resize: vertical;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--clr-purple-600, #5357b6);
+}
+
+.btn-update {
+  align-self: flex-end;
+}
+
+/* Margin khusus untuk form reply saat disisipkan */
+.reply-input-wrapper {
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
