@@ -1,5 +1,5 @@
 /* ==========================================
-   VARIABLES & CSS RESET
+   VARIABLES & CSS RESET (Disempurnakan)
    ========================================== */
 :root {
   --clr-purple-600: hsl(238, 40%, 52%);
@@ -16,6 +16,10 @@
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-bold: 700;
+
+  /* FIX: Variabel Centralization untuk Shadow & Radius */
+  --box-shadow-modal: 0 0.9375rem 1.875rem rgba(0, 0, 0, 0.15);
+  --border-radius-card: 0.5rem;
 }
 
 *,
@@ -28,7 +32,8 @@
 
 body {
   font-family: 'Rubik', sans-serif;
-  font-size: 1rem;
+  /* FIX: Menggunakan clamp() untuk Responsive Fluid Typography */
+  font-size: clamp(0.9375rem, 2vw, 1rem); 
   background-color: var(--clr-grey-50);
   color: var(--clr-grey-500);
   min-height: 100vh;
@@ -38,22 +43,22 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Screen Reader Only Utility */
+/* Screen Reader Only Utility (Relative rem unit) */
 .sr-only {
   position: absolute;
-  width: 0.0625rem;  /* Mengganti 1px -> 0.0625rem */
-  height: 0.0625rem; /* Mengganti 1px -> 0.0625rem */
+  width: 0.0625rem;
+  height: 0.0625rem;
   padding: 0;
-  margin: -0.0625rem; /* Mengganti -1px -> -0.0625rem */
+  margin: -0.0625rem;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
-/* Container utama berukuran relatif (rem) */
+
 .comments-container {
   width: 100%;
-  max-width: 45.625rem; /* ganti 730px ke rem */
+  max-width: 45.625rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -70,7 +75,7 @@ body {
    ========================================== */
 .comment-card {
   background-color: var(--clr-white);
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-card);
   padding: 1rem;
   display: flex;
   flex-direction: column-reverse;
@@ -122,7 +127,7 @@ body {
 
 .comment-text {
   line-height: 1.5;
-  overflow-wrap: break-word; /* modern pengganti word-break: break-word */
+  overflow-wrap: break-word;
 }
 
 .replying-to {
@@ -190,14 +195,15 @@ body {
 }
 
 /* ==========================================
-   THREAD BALASAN (REPLIES)
+   THREAD BALASAN (LOGICAL PROPERTIES)
    ========================================== */
 .replies-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--clr-grey-100);
+  /* FIX: Menggunakan Logical Property untuk mendukung i18n / RTL */
+  padding-inline-start: 1rem; 
+  border-inline-start: 2px solid var(--clr-grey-100);
 }
 
 /* ==========================================
@@ -205,7 +211,7 @@ body {
    ========================================== */
 .add-comment-section {
   background-color: var(--clr-white);
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-card);
   padding: 1rem;
 }
 
@@ -221,7 +227,7 @@ body {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--clr-grey-100);
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-card);
   font-family: inherit;
   font-size: 0.9375rem;
   color: var(--clr-grey-800);
@@ -237,7 +243,7 @@ body {
   background-color: var(--clr-purple-600);
   color: var(--clr-white);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-card);
   padding: 0.75rem 1.5rem;
   font-family: inherit;
   font-weight: var(--fw-medium);
@@ -262,16 +268,17 @@ body {
 }
 
 /* ==========================================
-   MODAL DELETE (CONSOLIDATED)
+   MODAL DELETE
    ========================================== */
 .modal-delete {
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-card);
   padding: 1.5rem;
   width: calc(100% - 2rem);
   max-width: 25rem;
   margin: auto;
-  box-shadow: 0 0.9375rem 1.875rem rgba(0, 0, 0, 0.15);
+  /* FIX: Menggunakan Variable Centralization */
+  box-shadow: var(--box-shadow-modal);
   background-color: var(--clr-white);
 }
 
@@ -307,7 +314,7 @@ body {
 .btn-confirm-delete {
   padding: 0.875rem 1rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-card);
   color: var(--clr-white);
   font-family: inherit;
   font-size: 0.9375rem;
@@ -331,9 +338,9 @@ body {
 }
 
 /* ==========================================
-   DESKTOP MEDIA QUERIES (rem units)
+   DESKTOP MEDIA QUERIES
    ========================================== */
-@media (min-width: 40rem) { /* 640px = 40rem */
+@media (min-width: 40rem) {
   .comment-card {
     flex-direction: row;
     padding: 1.5rem;
@@ -347,8 +354,9 @@ body {
   }
 
   .replies-wrapper {
-    padding-left: 2.6875rem;
-    margin-left: 2.6875rem;
+    /* FIX: Logical properties di media query */
+    padding-inline-start: 2.6875rem;
+    margin-inline-start: 2.6875rem;
   }
 
   .comment-form {
@@ -365,8 +373,10 @@ body {
   }
 }
 
-/* Accessibility: Reduced Motion */
-========================================== */
+/* ==========================================
+   FIX: ACCESSIBILITY REDUCED MOTION
+   (Mematikan seluruh transisi & animasi secara universal)
+   ========================================== */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -383,6 +393,7 @@ body {
   text-align: center;
   margin-top: 2rem;
 }
+
 .attribution a {
-  color: hsl(228, 45%, 44%);
+  color: var(--clr-purple-600);
 }
