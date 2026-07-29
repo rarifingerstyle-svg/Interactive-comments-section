@@ -31,7 +31,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
+  margin: clamp(-0.125rem, -0.0625rem + 0.5vw, 0rem);
   padding: 0;
 }
 
