@@ -130,7 +130,7 @@ body {
 }
 
 .time-ago {
-  font-size: 0.9375rem;
+  font-size: clamp(0.75rem, 1.5vw, 0.9375rem); /* 12px - 15px */
 }
 
 .comment-text {
