@@ -47,15 +47,15 @@ body {
   padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
 }
 
-/* Screen Reader Only Utility */
+/* Screen Reader Only Utility Modern (Accessible & Responsive) */
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem; /* Menggantikan 1px */
+  height: 0.0625rem; /* Menggantikan 1px */
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem; /* Menggantikan -1px */
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%); /* Metode modern pengganti clip: rect() */
   white-space: nowrap;
   border: 0;
 }
